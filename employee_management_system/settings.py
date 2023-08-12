@@ -10,14 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from pathlib import Path
 import os
 
 from decouple import Csv, config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-ENV_FILE = Path(BASE_DIR, 'env/.env')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ENV_FILE = os.path.join(BASE_DIR, '.env')
+
 
 def get_env(variable, cast, default_value=None, source_cast=None):
     """
@@ -53,7 +53,6 @@ DEBUG = get_env('DEBUG', bool, 0, int)
 DJANGO_LOG_LEVEL = get_env('DJANGO_LOG_LEVEL', str, 'INFO')
 
 ALLOWED_HOSTS = get_env('ALLOWED_HOSTS', Csv(), [])
-
 
 # Application definition
 
@@ -96,7 +95,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'employee_management_system.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -110,7 +108,6 @@ DATABASES = {
         'PASSWORD': get_env('DB_PASSWORD', str),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -130,7 +127,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -143,7 +139,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
